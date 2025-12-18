@@ -6,17 +6,15 @@ import math
 # --- 1. AYARLAR VE VERİLER ---
 st.set_page_config(page_title="AKILLI KALKAN", page_icon="🛡️")
 
-# Yüklediğin 7B ve 7D listelerindeki tüm isimleri birleştirdim
+# Sınıf Listesi (7B ve 7D Birleşik)
 SINIF_LISTESI = [
-    # 7D SINIFI
     "ELİF SENA ALGIN", "ZELİHA BÜYÜKDOĞAN", "ÜMRAN LALEK", "EFE SAÇMALI", "YASIN ERDOĞAN",
-    "MUSTAFA EFE BAYSAL", "NASIF EMRE GÖZÜKÜÇÜK", "ALTAN ÖZTÜRK", "YİCİT ALİ MERT",
+    "MUSTAFA EFE BAYSAL", "NASIF EMRE GÖZÜKÜÇÜK", "ALTAN ÖZTÜRK", "YİCIT ALI MERT",
     "ZEYNEP BEREKETLİ", "ONUR KAAN ÖZYURT", "ECE SU KAYA", "EGEHAN KUDDAR", "ELA YILDIRIM",
     "ELISA BAL", "FADİME HİRANUR AYKÜL", "HATİCE KARAKAŞ", "HAVVA SİZGEN", "MAHMUD SAMİ SİÇRAMAZ",
     "İSA ALPEREN DURUKAN", "İBRAHİM DA", "BAYRAM DEMİRESER", "MELİSANUR TELEK", "MİNE DURU UZUN",
     "MİRAÇ CAN TARAÇ", "MUHAMMED ALI KILINÇ", "FEDYE ÖMERİ", "ŞADİYE GÜL KUŞDEMİR",
     "TUANA SUNA YALÇIN", "YAĞMUR ÇETİN", "YAHYA NEBİ ERDOĞAN", "ZELİHA ŞİFA KILIÇ", "SİDRA KATBİ",
-    # 7B SINIFI
     "SIDIKA SILA DAĞ", "ALI BATIN ÇETİN", "PERİHAN CİVELEK", "ELİF ÜLKÜ AKDENİZ", "DİLANUR SARIKAYA",
     "EMİR ŞAHİN", "SÜLEYMAN KUŞCU", "BERKAY ALP SİVRİDAĞ", "SILA TOPAL", "AHMED HAYRI KUŞÇUTOPAL",
     "MEHMET ÇAĞLAYAN HARPUT", "BERKİN ERVA GÜLDEN", "TAHA ERDOĞAN", "ŞEHED MUSTAFA", "ESMA SAKMEN",
@@ -55,15 +53,21 @@ def ters_matris_moduler(matris, mod=256):
     except: return None
 
 # --- 3. ARAYÜZ TASARIMI ---
-# İSTEDİĞİN YENİ BAŞLIK BURADA:
 st.title("🛡️ AKILLI KALKAN")
-st.subheader("TÜBİTAK 2204-B Projesi -Türkçe Karakter Destekli -2025 Adana")
+
+# BAŞLIĞI SATIRLARA BÖLDÜK
+st.markdown("""
+### TÜBİTAK 2204-B Projesi
+#### Türkçe Karakter Destekli
+##### 2025 Adana
+---
+""", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["🔒 Şifrele", "🔓 Şifre Çöz"])
 
 with tab1:
     st.header("Mesaj Şifreleme")
-    secilen_ogrenci = st.selectbox("1. Anahtar Öğrenciyi Seçin", sorted(SINIF_LISTESI), key="sifrele_secim")
+    secilen_ogrenci = st.selectbox("1. Anahtar Öğrenciyi Seçin", sorted(list(set(SINIF_LISTESI))), key="sifrele_secim")
     mesaj = st.text_area("2. Mesajınızı Girin", height=100)
     
     if st.button("ŞİFRELE", type="primary"):
@@ -86,7 +90,7 @@ with tab1:
 
 with tab2:
     st.header("Tersine Mühendislik")
-    coz_ogrenci = st.selectbox("1. Anahtar Öğrenciyi Seçin", sorted(SINIF_LISTESI), key="coz_secim")
+    coz_ogrenci = st.selectbox("1. Anahtar Öğrenciyi Seçin", sorted(list(set(SINIF_LISTESI))), key="coz_secim")
     sifreli_kod = st.text_area("2. Base64 Kodunu Yapıştırın")
     
     if st.button("ŞİFREYİ ÇÖZ", type="secondary"):
