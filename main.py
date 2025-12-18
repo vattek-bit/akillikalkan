@@ -6,17 +6,21 @@ import math
 # --- 1. AYARLAR VE VERİLER ---
 st.set_page_config(page_title="Akıllı Kalkan", page_icon="🛡️")
 
+# LİSTEYİ TÜRKÇE KARAKTERLERLE GÜNCELLEDİM
 VARSAYILAN_LISTE = [
-    "ELIF SENA ALGIN", "ZELIHA BUYUKDOGAN", "UMRAN LALEK", "EFE SACMALI",
-    "YASIN ERDOGAN", "MUSTAFA EFE BAYSAL", "NASIF EMRE GOZUKUCUK", "ALTAN OZTURK",
-    "ZEYNEP BEREKETLI", "ONUR KAAN OZYURT", "ECE SU KAYA", "EGEHAN KUDDAR",
-    "ELA YILDIRIM", "ELISA BAL", "FADIME HIRANUR AYKUL", "HATICE KARAKAS",
-    "HAVVA SIZGEN", "MAHMUD SAMI SICRAMAZ", "ISA ALPEREN DURUKAN", "BAYRAM DEMIRKESER",
-    "MELISANUR TELEK", "MINE DURU UZUN", "MIRAC CAN TARAC", "MUHAMMED ALI KILINC",
-    "FEDYE OMERI", "SADIYE GUL KUSDEMIR", "TUANA SUNA YALCIN", "YAGMUR CETIN",
-    "YAHYA NEBI ERDOGAN", "ZELIHA SIFA KILIC"
+    "ELİF SENA ALGIN", "ZELİHA BÜYÜKDOĞAN", "ÜMRAN LALEK", "EFE SAÇMALI",
+    "YASİN ERDOĞAN", "MUSTAFA EFE BAYSAL", "NASIF EMRE GÖZÜKÜÇÜK", "ALTAN ÖZTÜRK",
+    "ZEYNEP BEREKETLİ", "ONUR KAAN ÖZYURT", "ECE SU KAYA", "EGEHAN KUDDAR",
+    "ELA YILDIRIM", "ELİSA BAL", "FADİME HİRANUR AYKÜL", "HATİCE KARAKAŞ",
+    "HAVVA SİZGEN", "MAHMUD SAMİ SIÇRAMAZ", "İSA ALPEREN DURUKAN", "BAYRAM DEMİRKESER",
+    "MELİSANUR TELEK", "MİNE DURU UZUN", "MİRAÇ CAN TARAÇ", "MUHAMMED ALİ KILINÇ",
+    "FEDYE ÖMERİ", "ŞADİYE GÜL KUŞDEMİR", "TUANA SUNA YALÇIN", "YAĞMUR ÇETİN",
+    "YAHYA NEBİ ERDOĞAN", "ZELİHA ŞİFA KILIÇ", "SIDIKA SILA DAĞ", "ALİ BATIN ÇETİN",
+    "PERİHAN CİVELEK", "ELİF ÜLKÜ AKDENİZ", "DİLANUR SARIKAYA", "EMİR ŞAHİN",
+    "SÜLEYMAN KUŞCU", "BERKAY ALP SİVRİDAĞ"
 ]
 
+# Türkçe karakterlerin matematiksel değerleri (Proje Raporuna Uygun)
 KARAKTER_HARITASI = {
     'Ç': 199, 'Ğ': 208, 'İ': 221, 'Ö': 214, 'Ş': 222, 'Ü': 220,
     'ç': 231, 'ğ': 240, 'ı': 253, 'ö': 246, 'ş': 254, 'ü': 252,
@@ -26,10 +30,12 @@ MATRIS_SABITLERI = [1, 2, 4, 3]
 
 # --- 2. FONKSİYONLAR ---
 def get_ascii(char):
+    # Eğer harf haritada varsa özel değerini al, yoksa standart değerini al
     return KARAKTER_HARITASI.get(char, ord(char))
 
 def anahtar_uret(isim):
     sadece_isim = isim.split()[0]
+    # Harfleri tek tek matematiksel değere çevirip konumuyla çarpıyoruz
     toplam = sum(get_ascii(h) * (i+1) for i, h in enumerate(sadece_isim))
     return toplam % 256
 
@@ -48,7 +54,7 @@ def ters_matris_moduler(matris, mod=256):
 
 # --- 3. ARAYÜZ TASARIMI ---
 st.title("🛡️ Akıllı Kalkan")
-st.markdown("**TÜBİTAK 2204-B Projesi**")
+st.markdown("**TÜBİTAK 2204-B Projesi - Türkçe Karakter Destekli**")
 
 # Sekmeler (Tablar)
 tab1, tab2 = st.tabs(["🔒 Şifrele", "🔓 Şifre Çöz"])
@@ -61,7 +67,7 @@ with tab1:
     secilen_ogrenci = st.selectbox("1. Anahtar Öğrenciyi Seçin", VARSAYILAN_LISTE, key="sifrele_secim")
     
     # 2. Adım: Mesaj Girişi
-    mesaj = st.text_area("2. Mesajınızı Girin", height=100, placeholder="Örn: Merhaba Dünya")
+    mesaj = st.text_area("2. Mesajınızı Girin", height=100, placeholder="Örn: MERHABA DÜNYA")
     
     if st.button("ŞİFRELE", type="primary"):
         if not mesaj:
@@ -86,7 +92,7 @@ with tab1:
             
             st.success("Şifreleme Başarılı!")
             st.code(cikti, language="text")
-            st.info(f"Kullanılan Anahtar (Tuz): {anahtar}")
+            st.info(f"Anahtar (Tuz): {anahtar} | Seçilen: {secilen_ogrenci}")
 
 # -- SEKME 2: ŞİFRE ÇÖZME --
 with tab2:
@@ -121,7 +127,7 @@ with tab2:
                     
                     t3 = [x ^ anahtar for x in t2]
                     
-                    # ASCII'den Karaktere
+                    # ASCII'den Karaktere (Ters Harita)
                     cozulen = ""
                     for val in t3:
                         if val != 0:
