@@ -54,6 +54,7 @@ def ters_matris_hesapla(matris, mod=256):
 st.title("🛡️ AKILLI KALKAN")
 st.markdown("""
 ### TÜBİTAK 2204-B Projesi
+#### Akıllı Kalkan: Akıllı Cihazlar için Sınıf Listesi Tabanlı Şifreleme Yöntemi
 #### Türkçe Karakter Destekli
 ##### 2025 Adana
 ---
@@ -140,3 +141,4 @@ with tab2:
         else:
 
             st.warning("Lütfen şifreli kodu yapıştırın.")
+
